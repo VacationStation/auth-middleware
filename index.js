@@ -28,7 +28,7 @@ CkAuth.login = function ( req, res, next ) {
     needle.post ( CkAuth.url + '/api/v1/auth/login', data, {}, function ( err, resp ) {
         if ( err ) next ( err );
         console.log(err, resp);
-        if ( resp.body.user && resp.body.token ) {
+        if ( resp.body.success && resp.body.user ) {
             req.auth = { user : resp.body.user, token : resp.body.token };
             next ();
         } else {
@@ -43,7 +43,7 @@ CkAuth.verify = function ( req, res, next ) {
     };
     needle.post ( CkAuth.url + '/api/v1/auth/verify', data, {}, function ( err, resp ) {
         if ( err ) next ( err );
-        if ( resp.body.user && resp.body.token ) {
+        if ( resp.body.success && resp.body.user ) {
             req.auth = { user : resp.body.user, token : resp.body.token };
             res.body.token = resp.body.token;
             next ();
