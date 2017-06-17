@@ -10,13 +10,18 @@ let CkAuth = {
     passwordField : ""
 };
 
-CkAuth.init = function ( url, options ) {
+CkAuth.init = function ( url, options, debug ) {
+    this.debug = debug || false;
     this.url = url;
     this.userNameField = options.userNameField || "username";
     this.passwordField = options.passwordField || "password";
 };
 
 CkAuth.login = function ( req, res, next ) {
+    if(this.debug) {
+        console.log(req.body);
+        console.log(this.debug, this.url, this.userNameField, this.passwordField);
+    }
     const data = {
         email : req.body[ this.userNameField ],
         password : req.body[ this.passwordField ]
