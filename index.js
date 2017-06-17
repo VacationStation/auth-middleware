@@ -28,6 +28,7 @@ CkAuth.login = function ( req, res, next ) {
     };
     needle.post ( this.url + '/api/v1/auth/login', data, {}, function ( err, resp ) {
         if ( err ) next ( err );
+        if(this.debug) console.log(err, resp);
         if ( resp.body.user && resp.body.token ) {
             req.auth = { user : resp.body.user, token : resp.body.token };
             next ();
