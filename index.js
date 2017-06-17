@@ -11,21 +11,21 @@ let CkAuth = {
 };
 
 CkAuth.init = function ( url, options, debug ) {
-    this.debug = debug || false;
-    this.url = url;
-    this.userNameField = options.userNameField || "username";
-    this.passwordField = options.passwordField || "password";
+    CkAuth.debug = debug || false;
+    CkAuth.url = url;
+    CkAuth.userNameField = options.userNameField || "username";
+    CkAuth.passwordField = options.passwordField || "password";
 };
 
 CkAuth.login = function ( req, res, next ) {
         console.log(req.body);
-        console.log(this.debug, this.url, this.userNameField, this.passwordField);
+        console.log(CkAuth.debug, CkAuth.url, CkAuth.userNameField, CkAuth.passwordField);
 
     const data = {
-        email : req.body[ this.userNameField ],
-        password : req.body[ this.passwordField ]
+        email : req.body[ CkAuth.userNameField ],
+        password : req.body[ CkAuth.passwordField ]
     };
-    needle.post ( this.url + '/api/v1/auth/login', data, {}, function ( err, resp ) {
+    needle.post ( CkAuth.url + '/api/v1/auth/login', data, {}, function ( err, resp ) {
         if ( err ) next ( err );
         console.log(err, resp);
         if ( resp.body.user && resp.body.token ) {
@@ -41,7 +41,7 @@ CkAuth.verify = function ( req, res, next ) {
     const data = {
         token : req.body.token
     };
-    needle.post ( this.url + '/api/v1/auth/verify', data, {}, function ( err, resp ) {
+    needle.post ( CkAuth.url + '/api/v1/auth/verify', data, {}, function ( err, resp ) {
         if ( err ) next ( err );
         if ( resp.body.user && resp.body.token ) {
             req.auth = { user : resp.body.user, token : resp.body.token };
