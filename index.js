@@ -59,10 +59,12 @@ CkAuth.verify = function ( req, res, next ) {
 
 CkAuth.register = function ( req, res, next ) {
     const data = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password
+        user: {
+            firstName : req.body.firstName,
+            lastName : req.body.lastName,
+            email : req.body.email,
+            password : req.body.password
+        }
     };
     needle.post(CkAuth.url + '/api/v1/users', data, {json: true}, function (err, resp) {
         if ( err ) next ( err );
