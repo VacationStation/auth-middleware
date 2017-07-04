@@ -49,7 +49,7 @@ CkAuth.verify = function ( req, res, next ) {
         if ( resp.body.success && resp.body.user ) {
             req.auth = { user : resp.body.user, token : resp.body.token };
             req.body.auth = { user : resp.body.user, token : resp.body.token };
-            res.body.token = resp.body.token;
+            // res.body.token = resp.body.token;
             next ();
         } else {
             next ( new Error ( "No Authentication information provided" ) );
