@@ -57,4 +57,26 @@ CkAuth.verify = function ( req, res, next ) {
     } );
 };
 
+CkAuth.register = function ( req, res, next ) {
+    const data = {
+        user: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: req.body.password
+        }
+    };
+    needle.post(CkAuth.url + '/api/v1/users', data, {}, function (err, resp) {
+        if ( err ) next ( err );
+        if ( resp.body.success && resp.body.user ) {
+            req.user = resp.body.user;
+            req.body.user = resp.body.user;
+            // res.body.token = resp.body.token;
+            next ();
+        } else {
+            next ( new Error ( "No User information provided" ) );
+        }
+    });
+};
+
 module.exports = CkAuth;
