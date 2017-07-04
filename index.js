@@ -44,7 +44,7 @@ CkAuth.verify = function ( req, res, next ) {
     const data = {
         token : token.replace("JWT ", "")
     };
-    needle.post ( CkAuth.url + '/api/v1/auth/verify', data, {}, function ( err, resp ) {
+    needle.post ( CkAuth.url + '/api/v1/auth/validate', data, {}, function ( err, resp ) {
         if ( err ) next ( err );
         if ( resp.body.success && resp.body.user ) {
             req.auth = { user : resp.body.user, token : resp.body.token };
